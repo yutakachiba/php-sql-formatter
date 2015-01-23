@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bootstrap-3.3.2-dist/css/bootstrap.min.css">
+    <title>php-sql-formatter</title>
+    <style>
+      textarea {
+          font-family: "MigMix 1M"
+      }
+    </style>
+  </head>
+  <body>
+    <div class="conteiner">
+      <div class="row">
+        <div class="col-md-6">
+          <form action="#">
+            <div class="form-group">
+              <textarea id="input" class="form-control" rows="30"></textarea>
+            </div>
+            <div class="form-group text-center">
+              <button type="button" class="btn btn-success" onclick="format();">Apply</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <form action="#">
+            <div class="form-group">
+              <textarea id="result" class="form-control" rows="30"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+
+      document.getElementById('input').addEventListener('keydown', function (e) {
+
+          var elem, end, start, value;
+
+          if (e.keyCode === 9) {
+
+              if (e.preventDefault) {
+                  e.preventDefault();
+              }
+
+              elem = e.target;
+              start = elem.selectionStart;
+              end = elem.selectionEnd;
+              value = elem.value;
+              elem.value = "" + (value.substring(0, start)) + "    " + (value.substring(end));
+              elem.selectionStart = elem.selectionEnd = start + 1;
+              return false;
+          }
+      });
+
+      var format = function () {
+
+          var input  = document.getElementById('input');
+          var result = document.getElementById('result');
+
+          result.value = '';
+
+          var maxChars = 0;
+          var lines = input.value.split("\n");
+
+          for (var i = 0; i < lines.length; i++) {
+              if (lines[i].length > maxChars) {
+                  maxChars = parseInt(lines[i].length);
+              }
+          }
+
+          var formatted = '';
+
+          for (var i = 0; i < lines.length; i++) {
+
+              var spaces = '';
+
+              for (var j = 0; j < (maxChars - lines[i].length); j++) {
+                  spaces += ' ';
+              }
+
+              if (i === 0) {
+                  formatted += '$sql  = "' + lines[i] + spaces + '    " . PHP_EOL' + "\n";
+              } else {
+                  formatted += '$sql .= "' + lines[i] + spaces + '    " . PHP_EOL' + "\n";
+              }
+          }
+
+          result.value = formatted;
+      };
+
+    </script>
+  </body>
+</html>
+
