@@ -74,6 +74,8 @@
 
           for (var i = 0; i < lines.length; i++) {
 
+              if (lines[i].length < 1) continue;
+
               var spaces = '';
 
               for (var j = 0; j < (maxChars - lines[i].length); j++) {
