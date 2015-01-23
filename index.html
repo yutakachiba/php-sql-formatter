@@ -6,7 +6,7 @@
     <title>php-sql-formatter</title>
     <style>
       textarea {
-          font-family: "MigMix 1M"
+          font-family: monospace !important;
       }
     </style>
   </head>
@@ -83,9 +83,9 @@
               }
 
               if (i === 0) {
-                  formatted += '$sql  = "' + lines[i] + spaces + '    " . PHP_EOL' + "\n";
+                  formatted += '$sql  = "' + lines[i] + spaces + '    " . PHP_EOL;' + "\n";
               } else {
-                  formatted += '$sql .= "' + lines[i] + spaces + '    " . PHP_EOL' + "\n";
+                  formatted += '$sql .= "' + lines[i] + spaces + '    " . PHP_EOL;' + "\n";
               }
           }
 
